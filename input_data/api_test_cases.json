@@ -1,0 +1,161 @@
+[
+  {
+    "id": "TC01",
+    "type": "정상 등록",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "company_name": "새봄소프트",
+      "position": "데이터 분석가",
+      "applied_date": "2026-11-01",
+      "status": "applied",
+      "notes": "SQL 역량 중심"
+    },
+    "expected_status": 201,
+    "expected": "신규 지원 내역 생성"
+  },
+  {
+    "id": "TC02",
+    "type": "필수 필드 누락",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "position": "데이터 분석가",
+      "applied_date": "2026-11-01",
+      "status": "applied"
+    },
+    "expected_status": 422,
+    "expected": "company_name 누락"
+  },
+  {
+    "id": "TC03",
+    "type": "공백 입력",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "company_name": "   ",
+      "position": "데이터 분석가",
+      "applied_date": "2026-11-01",
+      "status": "applied"
+    },
+    "expected_status": 422,
+    "expected": "공백만 있는 회사명 거부"
+  },
+  {
+    "id": "TC04",
+    "type": "중복 등록",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "company_name": "네오데이터랩",
+      "position": "백엔드 개발자",
+      "applied_date": "2026-11-01",
+      "status": "applied"
+    },
+    "expected_status": 409,
+    "expected": "시드 1번과 회사명+직무 중복"
+  },
+  {
+    "id": "TC05",
+    "type": "양끝 공백 중복",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "company_name": "  네오데이터랩  ",
+      "position": " 백엔드 개발자 ",
+      "applied_date": "2026-11-01",
+      "status": "applied"
+    },
+    "expected_status": 409,
+    "expected": "양끝 공백 제거 후 중복 감지"
+  },
+  {
+    "id": "TC06",
+    "type": "영문 대소문자 중복",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "company_name": "nova labs",
+      "position": "프론트엔드 개발자",
+      "applied_date": "2026-11-01",
+      "status": "applied"
+    },
+    "expected_status": 409,
+    "expected": "NOVA Labs와 대소문자 무시 비교"
+  },
+  {
+    "id": "TC07",
+    "type": "미지원 상태",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "company_name": "새빛테크",
+      "position": "ML 엔지니어",
+      "applied_date": "2026-11-01",
+      "status": "waiting"
+    },
+    "expected_status": 422,
+    "expected": "허용 목록 밖 상태값 거부"
+  },
+  {
+    "id": "TC08",
+    "type": "날짜 형식 오류",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "company_name": "새빛테크",
+      "position": "ML 엔지니어",
+      "applied_date": "2026/11/01",
+      "status": "applied"
+    },
+    "expected_status": 422,
+    "expected": "YYYY-MM-DD가 아닌 날짜 거부"
+  },
+  {
+    "id": "TC09",
+    "type": "존재하지 않는 날짜",
+    "method": "POST",
+    "path": "/api/applications",
+    "body": {
+      "company_name": "새빛테크",
+      "position": "ML 엔지니어",
+      "applied_date": "2026-02-30",
+      "status": "applied"
+    },
+    "expected_status": 422,
+    "expected": "실재하지 않는 날짜 거부"
+  },
+  {
+    "id": "TC10",
+    "type": "상태 변경",
+    "method": "PATCH",
+    "path": "/api/applications/1/status",
+    "body": {
+      "status": "interview"
+    },
+    "expected_status": 200,
+    "expected": "ID 1 상태가 interview로 변경"
+  },
+  {
+    "id": "TC11",
+    "type": "없는 ID 상태 변경",
+    "method": "PATCH",
+    "path": "/api/applications/99999/status",
+    "body": {
+      "status": "interview"
+    },
+    "expected_status": 404,
+    "expected": "대상 리소스 없음"
+  },
+  {
+    "id": "TC12",
+    "type": "상태 변경 값 오류",
+    "method": "PATCH",
+    "path": "/api/applications/1/status",
+    "body": {
+      "status": "unknown"
+    },
+    "expected_status": 422,
+    "expected": "허용하지 않은 상태값 거부"
+  }
+]

@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8">
+  <title>새 지원 등록 - JobTracker</title>
+  <style>
+    body { font-family: sans-serif; margin: 2rem; }
+    label { display: block; margin-top: 1rem; }
+    input, select, textarea { width: 100%; max-width: 400px; padding: 0.4rem; }
+    .errors { color: #b00020; margin-top: 1rem; }
+  </style>
+</head>
+<body>
+  <p><a href="/">목록으로</a></p>
+  <h1>새 지원 등록</h1>
+
+  {% if errors %}
+  <div class="errors">
+    <ul>
+      {% for error in errors %}
+      <li>{{ error }}</li>
+      {% endfor %}
+    </ul>
+  </div>
+  {% endif %}
+
+  <form method="post" action="/new">
+    <label for="company_name">회사명</label>
+    <input type="text" id="company_name" name="company_name" value="{{ form_data.get('company_name', '') }}">
+
+    <label for="position">직무</label>
+    <input type="text" id="position" name="position" value="{{ form_data.get('position', '') }}">
+
+    <label for="applied_date">지원일</label>
+    <input type="date" id="applied_date" name="applied_date" value="{{ form_data.get('applied_date', '') }}">
+
+    <label for="status">상태</label>
+    <select id="status" name="status">
+      {% for code, label in status_labels.items() %}
+      <option value="{{ code }}" {% if code == form_data.get('status') %}selected{% endif %}>{{ label }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="notes">메모</label>
+    <textarea id="notes" name="notes">{{ form_data.get('notes', '') }}</textarea>
+
+    <p><button type="submit">저장</button></p>
+  </form>
+</body>
+</html>

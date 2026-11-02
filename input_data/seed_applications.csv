@@ -1,0 +1,13 @@
+﻿id,company_name,position,applied_date,status,notes
+1,네오데이터랩,백엔드 개발자,2026-09-07,applied,"Python, FastAPI 중심"
+2,마루AI,AI 서비스 개발자,2026-09-10,document_passed,AI 서비스 개발
+3,블루코드,React 프론트엔드 개발자,2026-09-14,rejected,"React, TypeScript"
+4,그린클라우드,클라우드 엔지니어,2026-09-21,applied,클라우드 운영
+5,큐브핀테크,데이터 엔지니어,2026-09-25,interview,데이터 파이프라인
+6,하늘플랫폼,풀스택 개발자,2026-10-02,document_passed,"React, FastAPI"
+7,오로라시스템즈,LLM 서비스 엔지니어,2026-10-07,applied,RAG API 개발
+8,메이플로직,백엔드 개발자,2026-10-12,rejected,REST API 개발
+9,코드파운드리,AI 플랫폼 개발자,2026-10-16,final_passed,AI 서비스 운영
+10,비전웍스,컴퓨터비전 개발자,2026-10-20,interview,PyTorch 기반
+11,NOVA Labs,프론트엔드 개발자,2026-10-26,applied,React 대시보드
+12,데이터브릿지,DB 개발자,2026-10-29,document_passed,SQL 데이터 모델링

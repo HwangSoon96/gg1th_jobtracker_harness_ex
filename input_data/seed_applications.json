@@ -1,0 +1,98 @@
+[
+  {
+    "id": 1,
+    "company_name": "네오데이터랩",
+    "position": "백엔드 개발자",
+    "applied_date": "2026-09-07",
+    "status": "applied",
+    "notes": "Python, FastAPI 중심"
+  },
+  {
+    "id": 2,
+    "company_name": "마루AI",
+    "position": "AI 서비스 개발자",
+    "applied_date": "2026-09-10",
+    "status": "document_passed",
+    "notes": "AI 서비스 개발"
+  },
+  {
+    "id": 3,
+    "company_name": "블루코드",
+    "position": "React 프론트엔드 개발자",
+    "applied_date": "2026-09-14",
+    "status": "rejected",
+    "notes": "React, TypeScript"
+  },
+  {
+    "id": 4,
+    "company_name": "그린클라우드",
+    "position": "클라우드 엔지니어",
+    "applied_date": "2026-09-21",
+    "status": "applied",
+    "notes": "클라우드 운영"
+  },
+  {
+    "id": 5,
+    "company_name": "큐브핀테크",
+    "position": "데이터 엔지니어",
+    "applied_date": "2026-09-25",
+    "status": "interview",
+    "notes": "데이터 파이프라인"
+  },
+  {
+    "id": 6,
+    "company_name": "하늘플랫폼",
+    "position": "풀스택 개발자",
+    "applied_date": "2026-10-02",
+    "status": "document_passed",
+    "notes": "React, FastAPI"
+  },
+  {
+    "id": 7,
+    "company_name": "오로라시스템즈",
+    "position": "LLM 서비스 엔지니어",
+    "applied_date": "2026-10-07",
+    "status": "applied",
+    "notes": "RAG API 개발"
+  },
+  {
+    "id": 8,
+    "company_name": "메이플로직",
+    "position": "백엔드 개발자",
+    "applied_date": "2026-10-12",
+    "status": "rejected",
+    "notes": "REST API 개발"
+  },
+  {
+    "id": 9,
+    "company_name": "코드파운드리",
+    "position": "AI 플랫폼 개발자",
+    "applied_date": "2026-10-16",
+    "status": "final_passed",
+    "notes": "AI 서비스 운영"
+  },
+  {
+    "id": 10,
+    "company_name": "비전웍스",
+    "position": "컴퓨터비전 개발자",
+    "applied_date": "2026-10-20",
+    "status": "interview",
+    "notes": "PyTorch 기반"
+  },
+  {
+    "id": 11,
+    "company_name": "NOVA Labs",
+    "position": "프론트엔드 개발자",
+    "applied_date": "2026-10-26",
+    "status": "applied",
+    "notes": "React 대시보드"
+  },
+  {
+    "id": 12,
+    "company_name": "데이터브릿지",
+    "position": "DB 개발자",
+    "applied_date": "2026-10-29",
+    "status": "document_passed",
+    "notes": "SQL 데이터 모델링"
+  }
+]
