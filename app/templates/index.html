@@ -2,52 +2,256 @@
 <html lang="ko">
 <head>
   <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>지원 현황 목록 - JobTracker</title>
   <style>
-    body { font-family: sans-serif; margin: 2rem; }
-    table { border-collapse: collapse; width: 100%; }
-    th, td { border: 1px solid #ccc; padding: 0.5rem; text-align: left; }
-    form.status-form { display: flex; gap: 0.5rem; }
-    .top-bar { margin-bottom: 1rem; }
+    :root {
+      --bg: #f5f5f7;
+      --surface: #ffffff;
+      --border: rgba(0, 0, 0, 0.08);
+      --text: #1d1d1f;
+      --text-secondary: #6e6e73;
+      --accent: #0071e3;
+      --accent-hover: #0077ed;
+      --radius: 14px;
+      --shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px rgba(0, 0, 0, 0.05);
+    }
+
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #000000;
+        --surface: #1c1c1e;
+        --border: rgba(255, 255, 255, 0.1);
+        --text: #f5f5f7;
+        --text-secondary: #98989d;
+        --accent: #0a84ff;
+        --accent-hover: #3a9bff;
+        --shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 8px 24px rgba(0, 0, 0, 0.4);
+      }
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      padding: 3rem 1.5rem;
+      background: var(--bg);
+      color: var(--text);
+      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Segoe UI", "Helvetica Neue", "Apple SD Gothic Neo", "Malgun Gothic", sans-serif;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    .page {
+      max-width: 1040px;
+      margin: 0 auto;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1.75rem;
+    }
+
+    h1 {
+      font-size: 1.75rem;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin: 0;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      border: none;
+      border-radius: 980px;
+      padding: 0.55rem 1.1rem;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background-color 0.15s ease, transform 0.1s ease;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .btn-primary:hover { background: var(--accent-hover); }
+    .btn-primary:active { transform: scale(0.97); }
+
+    .btn-secondary {
+      background: var(--surface);
+      color: var(--accent);
+      border: 1px solid var(--border);
+      padding: 0.45rem 0.85rem;
+      border-radius: 10px;
+      font-size: 0.85rem;
+    }
+
+    .btn-secondary:hover { background: rgba(0, 113, 227, 0.08); }
+
+    a { text-decoration: none; }
+
+    .card {
+      background: var(--surface);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid var(--border);
+      overflow: hidden;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 0.9rem;
+    }
+
+    thead th {
+      text-align: left;
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-secondary);
+      padding: 0.9rem 1.25rem;
+      border-bottom: 1px solid var(--border);
+      background: rgba(0, 0, 0, 0.015);
+    }
+
+    tbody tr {
+      border-bottom: 1px solid var(--border);
+      transition: background-color 0.12s ease;
+    }
+
+    tbody tr:last-child { border-bottom: none; }
+
+    tbody tr:hover {
+      background: rgba(0, 113, 227, 0.05);
+    }
+
+    td {
+      padding: 0.9rem 1.25rem;
+      vertical-align: middle;
+    }
+
+    td.company { font-weight: 600; }
+
+    td.notes {
+      color: var(--text-secondary);
+      max-width: 220px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 980px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge::before {
+      content: "";
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: currentColor;
+    }
+
+    .badge-applied        { background: rgba(142, 142, 147, 0.15); color: #6e6e73; }
+    .badge-document_passed { background: rgba(10, 132, 255, 0.12); color: #0071e3; }
+    .badge-interview       { background: rgba(255, 149, 0, 0.14); color: #c2690a; }
+    .badge-final_passed    { background: rgba(52, 199, 89, 0.15); color: #248a3d; }
+    .badge-rejected        { background: rgba(255, 59, 48, 0.12); color: #d70015; }
+
+    form.status-form {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    select {
+      appearance: none;
+      font-family: inherit;
+      font-size: 0.85rem;
+      padding: 0.4rem 0.7rem;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+    }
+
+    select:focus, .btn:focus {
+      outline: 2px solid var(--accent);
+      outline-offset: 1px;
+    }
+
+    .empty-state {
+      padding: 3rem 1.5rem;
+      text-align: center;
+      color: var(--text-secondary);
+      font-size: 0.95rem;
+    }
   </style>
 </head>
 <body>
-  <div class="top-bar">
-    <a href="/new"><button type="button">새 지원 등록</button></a>
+  <div class="page">
+    <div class="top-bar">
+      <h1>지원 현황</h1>
+      <a href="/new"><button type="button" class="btn btn-primary">+ 새 지원 등록</button></a>
+    </div>
+
+    <div class="card">
+      {% if applications %}
+      <table>
+        <thead>
+          <tr>
+            <th>회사명</th>
+            <th>직무</th>
+            <th>지원일</th>
+            <th>상태</th>
+            <th>메모</th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for application in applications %}
+          <tr>
+            <td class="company">{{ application.company_name }}</td>
+            <td>{{ application.position }}</td>
+            <td>{{ application.applied_date }}</td>
+            <td>
+              <span class="badge badge-{{ application.status }}">
+                {{ status_labels.get(application.status, application.status) }}
+              </span>
+            </td>
+            <td class="notes">{{ application.notes or "—" }}</td>
+            <td>
+              <form class="status-form" method="post" action="/applications/{{ application.id }}/status">
+                <select name="status">
+                  {% for code, label in status_labels.items() %}
+                  <option value="{{ code }}" {% if code == application.status %}selected{% endif %}>{{ label }}</option>
+                  {% endfor %}
+                </select>
+                <button type="submit" class="btn btn-secondary">변경</button>
+              </form>
+            </td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+      {% else %}
+      <div class="empty-state">아직 등록된 지원 건이 없습니다.</div>
+      {% endif %}
+    </div>
   </div>
-  <h1>지원 현황 목록</h1>
-  <table>
-    <thead>
-      <tr>
-        <th>회사명</th>
-        <th>직무</th>
-        <th>지원일</th>
-        <th>상태</th>
-        <th>메모</th>
-        <th></th>
-      </tr>
-    </thead>
-    <tbody>
-      {% for application in applications %}
-      <tr>
-        <td>{{ application.company_name }}</td>
-        <td>{{ application.position }}</td>
-        <td>{{ application.applied_date }}</td>
-        <td>{{ status_labels.get(application.status, application.status) }}</td>
-        <td>{{ application.notes or "" }}</td>
-        <td>
-          <form class="status-form" method="post" action="/applications/{{ application.id }}/status">
-            <select name="status">
-              {% for code, label in status_labels.items() %}
-              <option value="{{ code }}" {% if code == application.status %}selected{% endif %}>{{ label }}</option>
-              {% endfor %}
-            </select>
-            <button type="submit">변경</button>
-          </form>
-        </td>
-      </tr>
-      {% endfor %}
-    </tbody>
-  </table>
 </body>
 </html>
